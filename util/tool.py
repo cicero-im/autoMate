@@ -6,6 +6,7 @@ import traceback
 import pyautogui
 from PIL import Image
 from io import BytesIO
+from security import safe_command
 
 
 computer_control_lock = threading.Lock()
@@ -21,7 +22,7 @@ def execute_command(command, shell=False):
                 command[i] = os.path.expanduser(arg)
 
         try:
-            result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=shell, text=True, timeout=120)
+            result = safe_command.run(subprocess.run, command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=shell, text=True, timeout=120)
             return {
                 'status': 'success',
                 'output': result.stdout,
