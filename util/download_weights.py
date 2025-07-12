@@ -1,5 +1,6 @@
 import subprocess
 from pathlib import Path
+from security import safe_command
 
 def download():
     # 创建权重目录
@@ -42,7 +43,7 @@ def download():
                     "--local-dir",
                     "weights"
                 ]
-                subprocess.run(cmd, check=True)
+                safe_command.run(subprocess.run, cmd, check=True)
                 break  # 下载成功，跳出重试循环
             except subprocess.CalledProcessError as e:
                 if attempt == max_retries - 1:  # 最后一次尝试
