@@ -6,6 +6,7 @@ from gradio_ui import app
 from util import download_weights
 import torch
 import socket
+from security import safe_requests
 
 def run():
     try:
@@ -45,7 +46,7 @@ def run():
         print("启动Omniserver服务中，因为加载模型真的超级慢，请耐心等待！") 
         while True:
             try:
-                res = requests.get("http://127.0.0.1:8000/probe/", timeout=5)
+                res = safe_requests.get("http://127.0.0.1:8000/probe/", timeout=5)
                 if res.status_code == 200:
                     print("Omniparser服务启动成功...")
                     break
